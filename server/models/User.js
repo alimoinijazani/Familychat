@@ -6,6 +6,11 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true },
     picture: { type: String, default: 'images/noAvatar.png' },
+    status: { type: String, default: 'online' },
+    newMessages: {
+      type: Object,
+      default: {},
+    },
   },
   { timestamps: true }
 );
