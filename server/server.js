@@ -1,8 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import seedRoutes from './routes/seed.js';
-import userRoutes from './routes/user.js';
+
+import uploadRouter from './routes/uploadRoute.js';
+import userRouter from './routes/user.js';
+import seedRouter from './routes/seed.js';
 dotenv.config();
 mongoose.set('strictQuery', false);
 mongoose
@@ -17,8 +19,9 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api/seed', seedRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/seed', seedRouter);
+app.use('/api/user', userRouter);
+app.use('/api/upload', uploadRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send(err.message);
