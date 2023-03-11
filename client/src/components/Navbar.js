@@ -6,7 +6,7 @@ export default function Navbar() {
     <div className="bg-gray-100 p-3 mb-2 flex justify-between items-center">
       <div className="flex-col justify-center items-center ">
         <Link to="/">
-          <BsChatDots className="text-red-300 scale-150 m-auto" />
+          <BsChatDots className="text-red-600 scale-150 m-auto" />
           FamilyChat
         </Link>
       </div>

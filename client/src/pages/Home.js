@@ -14,9 +14,9 @@ export default function Home() {
         </p>
         <button
           type="button"
-          className="flex justify-around items-center rounded p-2 bg-pink-400 m-auto"
+          className="flex text-gray-50 shadow-xl justify-around items-center rounded p-2 bg-pink-400 m-auto"
           onClick={() => {
-            navigate('/chat');
+            navigate('/login');
           }}
         >
           GetStarted <BsChatFill className="text-red-200 ml-2" />
