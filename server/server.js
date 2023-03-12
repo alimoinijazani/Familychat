@@ -9,7 +9,9 @@ import userRouter from './routes/user.js';
 import seedRouter from './routes/seed.js';
 import User from './models/User.js';
 import Message from './models/Message.js';
+
 dotenv.config();
+
 mongoose.set('strictQuery', false);
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -19,7 +21,7 @@ mongoose
   .catch((err) => console.log(err));
 
 const app = express();
-
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

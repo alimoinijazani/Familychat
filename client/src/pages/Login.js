@@ -2,9 +2,11 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+// import axios from 'axios';
 import { getError } from './../utils';
+import { useLoginUserMutation } from '../services/appApi';
 export default function Login() {
+  const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -13,13 +15,22 @@ export default function Login() {
   } = useForm();
 
   const submitHandler = async ({ email, password }) => {
+    // try {
+    //   const { data } = await axios.post('/api/users/login', {
+    //     email,
+    //     password,
+    //   });
+    //   navigate('/chat');
+    //   toast.success('Login successfully');
+    // } catch (err) {
+    //   toast.error(getError(err));
+    // }
     try {
-      const { data } = await axios.post('/api/users/login', {
-        email,
-        password,
+      loginUser({ email, password }).then(({ data }) => {
+        if (data) {
+          navigate('/chat');
+        }
       });
-      navigate('/chat');
-      toast.success('Login successfully');
     } catch (err) {
       toast.error(getError(err));
     }
