@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/api/seed', seedRouter);
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 app.use('/api/upload', uploadRouter);
 
 app.use((err, req, res, next) => {
@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
 //socket
 app.use(cors());
 const httpServer = http.Server(app);
-const rooms = ['Family', 'Farmin', 'Work'];
+const rooms = ['Family', 'Parmin', 'Work'];
 app.get('/rooms', (req, res) => {
   res.send(rooms);
 });

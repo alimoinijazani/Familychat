@@ -1,7 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { getError } from './../utils';
 export default function Login() {
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const submitHandler = async ({ email, password }) => {
+    try {
+      const { data } = await axios.post('/api/users/login', {
+        email,
+        password,
+      });
+      navigate('/chat');
+      toast.success('Login successfully');
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
   return (
     <div className="grid grid-row-12 sm:grid-cols-12 sm:gap-x-12">
       <div className="row-span-6 sm:col-span-6">
@@ -13,26 +35,47 @@ export default function Login() {
       </div>
       <div className="row-span-6 sm:col-span-6 flex justify-center items-center my-12">
         <div className=" grow mx-2 ">
-          <form>
+          <form onSubmit={handleSubmit(submitHandler)}>
             <div className="mb-3">
               <label className="block">Email</label>
               <input
-                type="email"
+                type="text"
+                {...register('email', {
+                  required: 'Please enter Email',
+
+                  pattern: {
+                    value:
+                      /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z0-9_.+-]+$/i,
+                  },
+                })}
                 className="block  shadow-lg py-2 px-3 rounded-xl min-w-[15rem]
                               sm:min-w-[17rem] max-w-[25rem] w-full"
                 autoFocus
               />
+              {errors.email && (
+                <div className="text-red-500">{errors.email.message}</div>
+              )}
             </div>
             <div className="mb-3">
               <label className="block">Password</label>
               <input
                 type="password"
+                {...register('password', {
+                  required: 'Please Enter Password',
+                  minLength: {
+                    value: 5,
+                    message: 'Password should be More than 5 character',
+                  },
+                })}
                 className="block shadow-lg p-2 px-3 rounded-xl min-w-[15rem]
                               sm:min-w-[17rem] max-w-[25rem] w-full"
               />
+              {errors.password && (
+                <div className="text-red-500">{errors.password.message}</div>
+              )}
             </div>
             <button
-              type="button"
+              type="submit"
               className="flex shadow-xl text-gray-50 justify-around items-center rounded px-4 py-2 bg-pink-400 "
             >
               Login
