@@ -86,22 +86,25 @@ io.on('connection', (socket) => {
     io.to(room).emit('room-messages', roomMessages);
     socket.broadcast.emit('notifications', room);
   });
-  app.put('/api/users/logout', async (req, res) => {
-    try {
-      const user = await User.findById(req.body._id);
-      user.status = 'offline';
-      user.newMessages = req.body.newMessages;
-      await user.save();
-      const members = await User.find();
-      socket.broadcast.emit('new-user', members);
-      res.status(200).send();
-    } catch (err) {
-      console.log(err);
-      res.status(500).send('somthing go wrong on server');
-    }
+
+  app.get('/ali', (req, res) => {
+    res.send('ali');
   });
 });
+app.delete('/logout', async (req, res) => {
+  try {
+    const user = await User.findById(req.body._id);
+    user.status = 'offline';
+    user.newMessages = req.body.newMessages;
+    await user.save();
+    const members = await User.find();
 
+    res.status(200).send();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('somthing go wrong on server');
+  }
+});
 const port = process.env.PORT || 5000;
 
 httpServer.listen(port, console.log(`listen port ${port}...`));

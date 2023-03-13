@@ -4,8 +4,8 @@ import appApi from './services/appApi';
 
 // persist our store
 import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
 import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 // reducers

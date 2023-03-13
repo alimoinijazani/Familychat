@@ -15,16 +15,6 @@ export default function Login() {
   } = useForm();
 
   const submitHandler = async ({ email, password }) => {
-    // try {
-    //   const { data } = await axios.post('/api/users/login', {
-    //     email,
-    //     password,
-    //   });
-    //   navigate('/chat');
-    //   toast.success('Login successfully');
-    // } catch (err) {
-    //   toast.error(getError(err));
-    // }
     try {
       loginUser({ email, password }).then(({ data }) => {
         if (data) {
