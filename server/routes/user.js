@@ -9,25 +9,27 @@ userRouter.post(
   '/',
   expressAsyncHandler(async (req, res) => {
     const { email, name, password, picture } = req.body;
+    const newUser = new User({
+      name,
+      email,
+      password: bcryptjs.hashSync(password),
+      picture,
+    });
     const existUser = await User.findOne({ email });
     if (existUser) {
       res.status(404).send('email already exist');
     } else {
-      password = bcryptjs.hashSync(password);
-      const user = new User({ name, email, password, picture });
-      await user.save();
+      const user = await newUser.save();
       const { _id, name, email, picture, status, newMessage } = user;
-      res
-        .status(201)
-        .send({
-          _id,
-          name,
-          email,
-          picture,
-          status,
-          newMessage,
-          token: generateToken(user),
-        });
+      res.status(201).send({
+        _id,
+        name,
+        email,
+        picture,
+        status,
+        newMessage,
+        token: generateToken(user),
+      });
     }
   })
 );
@@ -44,17 +46,15 @@ userRouter.post(
       user.status = 'online';
       await user.save();
       const { _id, name, email, picture, status, newMessage } = user;
-      res
-        .status(200)
-        .send({
-          _id,
-          name,
-          email,
-          picture,
-          status,
-          newMessage,
-          token: generateToken(user),
-        });
+      res.status(200).send({
+        _id,
+        name,
+        email,
+        picture,
+        status,
+        newMessage,
+        token: generateToken(user),
+      });
     } else {
       res.status(401).send({ message: 'password is not correct' });
     }

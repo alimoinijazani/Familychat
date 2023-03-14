@@ -9,11 +9,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [logoutUser] = useLogoutUserMutation();
   const user = useSelector((state) => state.user);
-  // const logoutHandler = async (e) => {
-  //   e.preventDefault();
-  //   await logoutUser(user);
-  //   navigate('/');
-  // };
+
   const logoutHandler = async (e) => {
     e.preventDefault();
     await logoutUser(user);
@@ -29,7 +25,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div>
+        <div className="flex justify-center items-center">
           <Link to="/chat" className="mr-3">
             Chat
           </Link>
@@ -37,7 +33,14 @@ export default function Navbar() {
             <Link to="/login">Login</Link>
           ) : (
             <Menu as="div" className="relative inline-block">
-              <Menu.Button>{user.name}</Menu.Button>
+              <Menu.Button className="text-red-600 flex justify-center items-center">
+                {user.name}
+                <img
+                  src={user.picture}
+                  alt="profilepic"
+                  className="rounded-full w-10 h-10 ml-1"
+                />
+              </Menu.Button>
               <Menu.Items className="absolute rounded-sm p-2 right-0 w-40 origin-top-right shadow-lg bg-red-100">
                 <Menu.Item>
                   <Link to="/profile" className="block">

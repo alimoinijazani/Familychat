@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 // import axios from 'axios';
 import { getError } from './../utils';
 import { useLoginUserMutation } from '../services/appApi';
+import { useSelector } from 'react-redux';
 export default function Login() {
+  const user = useSelector((state) => state.user);
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const {
@@ -13,7 +15,11 @@ export default function Login() {
     register,
     formState: { errors },
   } = useForm();
-
+  useEffect(() => {
+    if (user) {
+      navigate('/chat');
+    }
+  }, [navigate, user]);
   const submitHandler = async ({ email, password }) => {
     try {
       loginUser({ email, password }).then(({ data }) => {
@@ -47,6 +53,7 @@ export default function Login() {
                   pattern: {
                     value:
                       /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z0-9_.+-]+$/i,
+                    message: 'Please Insert Correct Email',
                   },
                 })}
                 className="block  shadow-lg py-2 px-3 rounded-xl min-w-[15rem]
