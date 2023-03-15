@@ -23,7 +23,7 @@ export default function Register() {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate('');
   const [img, setImg] = useState();
-  const [{ loadingUpload, errorUpload }, dispatch] = useReducer(reducer, {
+  const [{ loadingUpload }, dispatch] = useReducer(reducer, {
     loadingUpload: false,
   });
   const [signupUser, { isLoading, error }] = useSignupUserMutation();

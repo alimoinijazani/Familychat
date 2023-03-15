@@ -36,7 +36,7 @@ export default function Navbar() {
               <Menu.Button className="text-red-600 flex justify-center items-center">
                 {user.name}
                 <img
-                  src={user.picture}
+                  src={user.picture ? user.picture : 'images/noAvatar.png'}
                   alt="profilepic"
                   className="rounded-full w-10 h-10 ml-1"
                 />
