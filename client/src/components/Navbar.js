@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BsChatDots } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu } from '@headlessui/react';
 import { useLogoutUserMutation } from '../services/appApi';
+import { AppContext } from '../context/appContext';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [logoutUser] = useLogoutUserMutation();
   const user = useSelector((state) => state.user);
-
+  const { socket, setMembers } = useContext(AppContext);
   const logoutHandler = async (e) => {
-    e.preventDefault();
-    await logoutUser(user);
-    navigate('/');
+    try {
+      e.preventDefault();
+      await logoutUser(user);
+      socket.emit('new-user');
+      navigate('/');
+    } catch (err) {}
   };
   return (
     <header>
@@ -41,14 +45,18 @@ export default function Navbar() {
                   className="rounded-full w-10 h-10 ml-1"
                 />
               </Menu.Button>
-              <Menu.Items className="absolute rounded-sm p-2 right-0 w-40 origin-top-right shadow-lg bg-red-100">
+              <Menu.Items className="absolute rounded-sm p-2 right-0 w-40 origin-top-right shadow-lg bg-red-100 z-10">
                 <Menu.Item>
                   <Link to="/profile" className="block">
                     Profile
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <button className="text-red-600" onClick={logoutHandler}>
+                  <button
+                    type="button"
+                    className="text-red-600 "
+                    onClick={logoutHandler}
+                  >
                     Logout
                   </button>
                 </Menu.Item>
