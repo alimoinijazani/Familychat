@@ -9,6 +9,7 @@ import userRouter from './routes/user.js';
 import seedRouter from './routes/seed.js';
 import User from './models/User.js';
 import Message from './models/Message.js';
+import path from 'path';
 
 dotenv.config();
 
@@ -28,6 +29,12 @@ app.use(express.json());
 app.use('/api/seed', seedRouter);
 app.use('/api/users', userRouter);
 app.use('/api/upload', uploadRouter);
+
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '/client/build')));
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/client/build/index.html'))
+);
 
 app.use((err, req, res, next) => {
   res.status(500).send(err.message);
