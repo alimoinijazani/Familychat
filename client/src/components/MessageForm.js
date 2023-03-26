@@ -52,7 +52,7 @@ export default function MessageForm() {
   };
   console.log(messages);
   return (
-    <div className=" relative">
+    <div className=" relative h-[90vh] sm:h-[81vh] ">
       <div className="sticky top-0 shadow-sm p-4 flex justify-between items-center ">
         <div className="flex-col">
           <h3 className="font-semibold">
