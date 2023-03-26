@@ -17,8 +17,11 @@ export default function Navbar() {
       await logoutUser(user);
       socket.emit('new-user');
       navigate('/');
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <header>
       <nav className="bg-gray-100 p-3 mb-2 flex justify-between items-center">

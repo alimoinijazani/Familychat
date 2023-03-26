@@ -47,7 +47,7 @@ async function getLastMessageFromRoom(room) {
   return roomMessages;
 }
 function sortRoomMessagesByDate(messages) {
-  messages.sort(function (a, b) {
+  return messages.sort(function (a, b) {
     let date1 = a._id.split('/');
     let date2 = b._id.split('/');
 
@@ -70,7 +70,8 @@ io.on('connection', (socket) => {
     socket.leave(previousRoom);
     let roomMessages = await getLastMessageFromRoom(newRoom);
     roomMessages = sortRoomMessagesByDate(roomMessages);
-    socket.emit('room-message', roomMessages);
+
+    socket.emit('room-messages', roomMessages);
   });
 
   socket.on('message-room', async (room, content, sender, time, date) => {
@@ -83,12 +84,9 @@ io.on('connection', (socket) => {
     });
     let roomMessages = await getLastMessageFromRoom(room);
     roomMessages = sortRoomMessagesByDate(roomMessages);
+
     io.to(room).emit('room-messages', roomMessages);
     socket.broadcast.emit('notifications', room);
-  });
-
-  app.get('/ali', (req, res) => {
-    res.send('ali');
   });
 });
 app.delete('/logout', async (req, res) => {

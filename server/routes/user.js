@@ -20,14 +20,14 @@ userRouter.post(
       res.status(404).send('email already exist');
     } else {
       const user = await newUser.save();
-      const { _id, name, email, picture, status, newMessage } = user;
+      const { _id, name, email, picture, status, newMessages } = user._doc;
       res.status(201).send({
         _id,
         name,
         email,
         picture,
         status,
-        newMessage,
+        newMessages,
         token: generateToken(user),
       });
     }
@@ -45,14 +45,13 @@ userRouter.post(
     if (bcryptjs.compareSync(req.body.password, user.password)) {
       user.status = 'online';
       await user.save();
-      const { _id, name, email, picture, status, newMessage } = user;
       res.status(200).send({
-        _id,
-        name,
-        email,
-        picture,
-        status,
-        newMessage,
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        picture: user.picture,
+        newMessages: user.newMessages,
+        status: user.status,
         token: generateToken(user),
       });
     } else {
