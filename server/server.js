@@ -40,7 +40,7 @@ app.use((err, req, res, next) => {
   res.status(500).send(err.message);
 });
 //socket
-app.use(cors());
+
 const httpServer = http.Server(app);
 const rooms = ['Family', 'Parmin', 'Work'];
 app.get('/rooms', (req, res) => {
