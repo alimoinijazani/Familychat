@@ -95,9 +95,9 @@ export default function Sidebar() {
               <GoPrimitiveDot className="absolute bottom-0 left-0 text-green-500" />
             </div>
             <div className="font-medium text-sm sm:text-base">{room}</div>
-            {user.newMessages[room] && (
+            {user?.newMessages[room] && (
               <span className="rounded-full w-5 h-5 bg-blue-500 text-white flex justify-center items-center">
-                {user.newMessages[room]}
+                {user?.newMessages[room]}
               </span>
             )}
           </div>

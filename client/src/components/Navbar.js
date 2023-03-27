@@ -11,12 +11,13 @@ export default function Navbar() {
   const [logoutUser] = useLogoutUserMutation();
   const user = useSelector((state) => state.user);
   const { socket, setMembers } = useContext(AppContext);
-  const logoutHandler = async (e) => {
+  const logoutHandler = async () => {
     try {
-      e.preventDefault();
+      // e.preventDefault();
       await logoutUser(user);
       socket.emit('new-user');
-      navigate('/');
+      // navigate('/');
+      window.location.replace('/');
     } catch (err) {
       console.log(err);
     }

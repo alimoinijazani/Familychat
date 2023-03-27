@@ -101,8 +101,8 @@ export default function MessageForm() {
                           : 'px-2 pt-1  d-flex flex-column bg-red-400 rounded-md'
                       }
                     >
-                      <span className="text-blue-600">{sender.name}</span>
-                      <span>{content}</span>
+                      <div className="text-blue-600">{sender.name}</div>
+                      <div>{content}</div>
                       <span className="mb-1 " style={{ color: 'grey' }}>
                         {time}
                       </span>
