@@ -29,7 +29,10 @@ app.use(express.json());
 app.use('/api/seed', seedRouter);
 app.use('/api/users', userRouter);
 app.use('/api/upload', uploadRouter);
-
+const rooms = ['Family', 'Parmin', 'Work'];
+app.get('/rooms', (req, res) => {
+  res.send(rooms);
+});
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, '/client/build')));
 app.get('*', (req, res) =>
@@ -42,10 +45,7 @@ app.use((err, req, res, next) => {
 //socket
 
 const httpServer = http.Server(app);
-const rooms = ['Family', 'Parmin', 'Work'];
-app.get('/rooms', (req, res) => {
-  res.send(rooms);
-});
+
 async function getLastMessageFromRoom(room) {
   let roomMessages = await Message.aggregate([
     { $match: { to: room } },
