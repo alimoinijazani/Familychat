@@ -50,7 +50,7 @@ export default function MessageForm() {
     socket.emit('message-room', roomId, message, user, time, todayDate);
     setMessage('');
   };
-  console.log(messages);
+
   return (
     <div className=" relative h-[90vh] sm:h-[81vh] ">
       <div className="sticky top-0 shadow-sm p-4 flex justify-between items-center ">

@@ -4,6 +4,7 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import { AppContext } from './../context/appContext';
 import { useSelector, useDispatch } from 'react-redux';
 import { addNotifications, resetNotifications } from '../features/userSlice';
+import { getError } from './../utils';
 export default function Sidebar() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -40,15 +41,16 @@ export default function Sidebar() {
   });
   useEffect(() => {
     if (user) {
-      setCurrentRoom('Family');
-
       const getRooms = async () => {
         try {
           const { data } = await axios.get('/rooms');
           setRooms(data);
-        } catch (err) {}
+        } catch (err) {
+          console.log(getError(err));
+        }
       };
       getRooms();
+      setCurrentRoom('Family');
       socket.emit('join-room', 'Family');
       socket.emit('new-user'); //update self as members
     }
