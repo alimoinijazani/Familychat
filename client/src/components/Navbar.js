@@ -17,7 +17,7 @@ export default function Navbar() {
       await logoutUser(user);
       socket.emit('new-user');
       // navigate('/');
-      //window.location.replace('/');
+      window.location.replace('/');
     } catch (err) {
       console.log(err);
     }
